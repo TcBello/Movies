@@ -1,5 +1,3 @@
-import RatingsEntity from "./ratings_entity";
-
 class MovieEntity {
   private title: string;
   private year: string;
@@ -15,7 +13,6 @@ class MovieEntity {
   private country: string;
   private awards: string;
   private poster: string;
-  private ratings: RatingsEntity;
   private metascore: string;
   private imdbRating: string;
   private imdbVotes: string;
@@ -39,7 +36,6 @@ class MovieEntity {
     country: string,
     awards: string,
     poster: string,
-    ratings: RatingsEntity,
     metascore: string,
     imdbRating: string,
     imdbVotes: string,
@@ -62,7 +58,6 @@ class MovieEntity {
     this.country = country;
     this.awards = awards;
     this.poster = poster;
-    this.ratings = ratings;
     this.metascore = metascore;
     this.imdbRating = imdbRating;
     this.imdbVotes = imdbVotes;
@@ -70,6 +65,54 @@ class MovieEntity {
     this.type = type;
     this.totalSeasons = totalSeasons;
     this.response = response;
+  }
+
+  static fromJSON(json: {
+    Title: string;
+    Year: string;
+    Rated: string;
+    Released: string;
+    Runtime: string;
+    Genre: string;
+    Director: string;
+    Writer: string;
+    Actors: string;
+    Plot: string;
+    Language: string;
+    Country: string;
+    Awards: string;
+    Poster: string;
+    Metascore: string;
+    imdbRating: string;
+    imdbVotes: string;
+    imdbID: string;
+    Type: string;
+    totalSeasons: string;
+    Response: string;
+  }): MovieEntity {
+    return new MovieEntity(
+      json.Title,
+      json.Year,
+      json.Rated,
+      json.Released,
+      json.Runtime,
+      json.Genre,
+      json.Director,
+      json.Writer,
+      json.Actors,
+      json.Plot,
+      json.Language,
+      json.Country,
+      json.Awards,
+      json.Poster,
+      json.Metascore,
+      json.imdbRating,
+      json.imdbVotes,
+      json.imdbID,
+      json.Type,
+      json.totalSeasons,
+      json.Response
+    );
   }
 }
 
