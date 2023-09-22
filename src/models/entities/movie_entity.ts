@@ -1,25 +1,25 @@
 class MovieEntity {
-  private title: string;
-  private year: string;
-  private rated: string;
-  private released: string;
-  private runtime: string;
-  private genre: string;
-  private director: string;
-  private writer: string;
-  private actors: string;
-  private plot: string;
-  private language: string;
-  private country: string;
-  private awards: string;
-  private poster: string;
-  private metascore: string;
-  private imdbRating: string;
-  private imdbVotes: string;
-  private imdbID: string;
-  private type: string;
-  private totalSeasons: string;
-  private response: string;
+  public title: string;
+  public year: string;
+  public rated: string;
+  public released: string;
+  public runtime: string;
+  public genre: string;
+  public director: string;
+  public writer: string;
+  public actors: string;
+  public plot: string;
+  public language: string;
+  public country: string;
+  public awards: string;
+  public poster: string;
+  public metascore: string;
+  public imdbRating: string;
+  public imdbVotes: string;
+  public imdbID: string;
+  public type: string;
+  public totalSeasons: string;
+  public response: string;
 
   constructor(
     title: string,
@@ -67,29 +67,7 @@ class MovieEntity {
     this.response = response;
   }
 
-  static fromJSON(json: {
-    Title: string;
-    Year: string;
-    Rated: string;
-    Released: string;
-    Runtime: string;
-    Genre: string;
-    Director: string;
-    Writer: string;
-    Actors: string;
-    Plot: string;
-    Language: string;
-    Country: string;
-    Awards: string;
-    Poster: string;
-    Metascore: string;
-    imdbRating: string;
-    imdbVotes: string;
-    imdbID: string;
-    Type: string;
-    totalSeasons: string;
-    Response: string;
-  }): MovieEntity {
+  static fromJSON(json: any): MovieEntity {
     return new MovieEntity(
       json.Title,
       json.Year,

@@ -20,16 +20,27 @@ class OmdbRepository implements MovieRepository {
 
           return newData;
         }
-
-        console.log(data);
       }
     }
 
     return [];
   }
-  getMovieByID(imdbID: string): Promise<MovieEntity> {
-    // TODO: Implement this method
-    throw new Error("Method not implemented.");
+  async getMovieByID(imdbID: string): Promise<MovieEntity | null> {
+    const result = await fetch(`${this._api}&i=${imdbID}`);
+
+    if (result.status === 200) {
+      const data = await result.json();
+
+      if (data.Response === "True") {
+        const newData = MovieEntity.fromJSON(data);
+
+        return newData;
+      }
+
+      console.log(data);
+    }
+
+    return null;
   }
 }
 
