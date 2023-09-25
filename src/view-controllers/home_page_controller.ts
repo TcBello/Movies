@@ -24,7 +24,7 @@ const useHomePageController = () => {
         setErrorMessage("Movie not found!");
       }
       setSuggestionLoading(false);
-    }, 500);
+    }, 1000);
 
     setTimer(timerID);
   }
