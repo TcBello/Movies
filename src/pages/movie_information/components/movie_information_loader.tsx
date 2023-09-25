@@ -45,13 +45,15 @@ const MovieInformationLoader = (props: {
             <HStack paddingTop={2} paddingBottom={2}>
               {props.genres.map((genre, index) => {
                 return (
-                  <Skeleton isLoaded={!props.isInformationLoading}>
+                  <Skeleton
+                    isLoaded={!props.isInformationLoading}
+                    key={`skeleton-genre-${index}`}
+                  >
                     <Tag
                       size={"lg"}
                       backgroundColor={AppColor.dark2}
                       color={"white"}
                       fontSize={20}
-                      key={`skeleton-genre-${index}`}
                       borderRadius={"full"}
                     >
                       {genre}
