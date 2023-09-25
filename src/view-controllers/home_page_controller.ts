@@ -18,8 +18,8 @@ const useHomePageController = () => {
     clearTimeout(timer);
     const timerID = setTimeout(async () => {
       const suggestionsData = await repo.searchMovieByTitle(value);
-      if (suggestionsData.length > 0) {
-        setSuggestions(suggestionsData.slice(0, 3));
+      if (suggestionsData.searchResults.length > 0) {
+        setSuggestions(suggestionsData.searchResults.slice(0, 3));
       } else {
         setErrorMessage("Movie not found!");
       }

@@ -4,38 +4,122 @@ import {
   Text,
   Wrap,
   WrapItem,
-  Image,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import AppColor from "../../themes/app_color";
 import NavBar from "../components/navbar";
 import SearchResultItem from "./components/search_result_item";
+import {
+  Pagination,
+  PaginationContainer,
+  PaginationNext,
+  PaginationPage,
+  PaginationPageGroup,
+  PaginationPrevious,
+  PaginationSeparator,
+} from "@ajna/pagination";
+import { useParams } from "react-router-dom";
+import useSearchResultPageController from "../../view-controllers/search_result_page_controller";
+import { useEffect } from "react";
 
 const SearchResultPage = () => {
+  const { query } = useParams();
+  const {
+    movies,
+    pages,
+    pagesCount,
+    currentPage,
+    offset,
+    isDataLoading,
+    handleGenerateSearchResult,
+    handlePageChange,
+    handleMovieClick,
+  } = useSearchResultPageController();
+
+  useEffect(() => {
+    handleGenerateSearchResult(query!);
+  }, [currentPage, offset]);
+
   return (
     <Container
       backgroundColor={AppColor.dark1}
       width="full"
       maxWidth={"100%"}
-      height={"100vh"}
+      height={isDataLoading ? "120vh" : "full"}
     >
       <NavBar />
-      <VStack backgroundColor={"green"} height={"100vh"}>
+      <VStack height={"100%"} paddingBottom={8}>
         <Text fontSize={40} fontWeight={"bold"} color={"white"}>
           Search Results
         </Text>
-        <Wrap spacing={20} width={"full"} flex={1}>
-          <WrapItem>
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-            <SearchResultItem />
-          </WrapItem>
-        </Wrap>
+        <SimpleGrid
+          spacingY={5}
+          width={"full"}
+          paddingTop={5}
+          paddingBottom={8}
+          columns={5}
+        >
+          {movies.map((movie, index) => {
+            return (
+              <SearchResultItem
+                movie={movie}
+                key={movie.imdbID}
+                onClick={() => handleMovieClick(movie.imdbID)}
+                isLoading={isDataLoading}
+              />
+            );
+          })}
+        </SimpleGrid>
+        <Pagination
+          pagesCount={pagesCount}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        >
+          <PaginationContainer>
+            <PaginationPrevious
+              _hover={{
+                bg: AppColor.light1,
+              }}
+              bg={AppColor.light2}
+              marginRight={5}
+            >
+              Previous
+            </PaginationPrevious>
+            <PaginationPageGroup
+              separator={
+                <PaginationSeparator
+                  fontSize="sm"
+                  w={7}
+                  jumpSize={11}
+                  color={"white"}
+                />
+              }
+            >
+              {pages.map((page: number) => (
+                <PaginationPage
+                  w={8}
+                  key={`pagination_page_${page}`}
+                  page={page}
+                  _current={{
+                    bg: AppColor.dark2,
+                    fontSize: "sm",
+                    w: 7,
+                    color: "white",
+                  }}
+                />
+              ))}
+            </PaginationPageGroup>
+            <PaginationNext
+              _hover={{
+                bg: AppColor.light1,
+              }}
+              bg={AppColor.light2}
+              marginLeft={5}
+            >
+              Next
+            </PaginationNext>
+          </PaginationContainer>
+        </Pagination>
       </VStack>
     </Container>
   );
