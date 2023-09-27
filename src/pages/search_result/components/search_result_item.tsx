@@ -35,7 +35,13 @@ const SearchResultItem = (props: {
           height={270}
           borderRadius={12}
         />
-        <Text fontSize={20} color={"White"}>
+        <Text
+          fontSize={20}
+          color={"White"}
+          textAlign={"center"}
+          paddingLeft={10}
+          paddingRight={10}
+        >
           {props.movie.title}
         </Text>
       </VStack>
