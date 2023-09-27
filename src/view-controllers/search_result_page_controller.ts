@@ -17,8 +17,8 @@ const useSearchResultPageController = () => {
     usePagination({
       total: moviesTotal,
       limits: {
-        outer: 2,
-        inner: 2,
+        outer: 1,
+        inner: 1,
       },
       initialState: {
         pageSize: 10,

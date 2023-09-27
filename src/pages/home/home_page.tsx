@@ -10,6 +10,7 @@ import {
   Button,
   Center,
   Flex,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import "./home_page.css";
 import { MdSearch, MdArrowForward } from "react-icons/md";
@@ -20,6 +21,8 @@ import Loader from "../components/loader";
 import SuggestionItem from "./components/suggestion_item";
 
 const HomePage = () => {
+  const [isDesktop] = useMediaQuery("(min-width: 768px)");
+
   const {
     query,
     isSuggestionLoading,
@@ -40,7 +43,7 @@ const HomePage = () => {
       >
         <VStack>
           {/* MOVIES TEXT */}
-          <Text fontSize={96} color={"white"}>
+          <Text fontSize={isDesktop ? 96 : 62} color={"white"}>
             MOVIES
           </Text>
           <Box height={5} />

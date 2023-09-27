@@ -7,6 +7,7 @@ import {
   Image,
   Text,
   Center,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { Fragment } from "react";
 import { MdGrade } from "react-icons/md";
@@ -17,6 +18,8 @@ const MovieInformation = (props: {
   genres: string[];
   movie: MovieEntity | null;
 }) => {
+  const [isDesktop] = useMediaQuery("(min-width: 768px)");
+
   if (props.movie === null) {
     return (
       <Fragment>
@@ -26,7 +29,12 @@ const MovieInformation = (props: {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Text color={"white"} fontWeight={"bold"} fontSize={20}>
+          <Text
+            color={"white"}
+            fontWeight={"bold"}
+            fontSize={20}
+            textAlign={"center"}
+          >
             Information can't be fetch at the moment
           </Text>
           <Text color={"white"} fontWeight={"bold"} fontSize={20}>
@@ -38,23 +46,70 @@ const MovieInformation = (props: {
   }
   return (
     <Fragment>
-      <Box padding={10}>
-        <HStack justifyContent={"space-around"}>
-          <Image
-            src={props.movie.poster}
-            width={230}
-            height={300}
-            borderRadius={12}
-          />
-          <Box w={3} />
-          <VStack alignItems={"flex-start"}>
-            <Text color={"white"} fontSize={64} fontWeight={"bold"}>
+      <Box
+        paddingTop={10}
+        paddingBottom={10}
+        paddingLeft={isDesktop ? 10 : 0}
+        paddingRight={isDesktop ? 10 : 0}
+      >
+        {isDesktop ? (
+          <HStack justifyContent={"space-around"}>
+            <Image
+              src={props.movie.poster}
+              width={230}
+              height={300}
+              borderRadius={12}
+            />
+            <Box w={3} />
+            <VStack alignItems={"flex-start"}>
+              <Text color={"white"} fontSize={64} fontWeight={"bold"}>
+                {props.movie.title}
+              </Text>
+              <Text color={"white"} fontSize={20}>
+                {props.movie.plot}
+              </Text>
+              <HStack paddingTop={2} paddingBottom={2}>
+                {props.genres.map((genre, index) => {
+                  return (
+                    <Tag
+                      size={"lg"}
+                      backgroundColor={AppColor.dark2}
+                      color={"white"}
+                      fontSize={20}
+                      key={`genre-${index}`}
+                      borderRadius={"full"}
+                    >
+                      {genre}
+                    </Tag>
+                  );
+                })}
+              </HStack>
+              <HStack>
+                <Icon as={MdGrade} height={30} width={30} color={"yellow"} />
+                <Text fontSize={20} color={"white"}>
+                  {props.movie.imdbRating}
+                </Text>
+              </HStack>
+            </VStack>
+          </HStack>
+        ) : (
+          <VStack>
+            <Image
+              src={props.movie.poster}
+              width={230}
+              height={300}
+              borderRadius={12}
+            />
+            <Text color={"white"} fontSize={32} fontWeight={"bold"}>
               {props.movie.title}
             </Text>
-            <Text color={"white"} fontSize={20}>
-              {props.movie.plot}
-            </Text>
-            <HStack paddingTop={2} paddingBottom={2}>
+            <HStack>
+              <Icon as={MdGrade} height={30} width={30} color={"yellow"} />
+              <Text fontSize={20} color={"white"}>
+                {props.movie.imdbRating}
+              </Text>
+            </HStack>
+            <HStack paddingTop={2} paddingBottom={10}>
               {props.genres.map((genre, index) => {
                 return (
                   <Tag
@@ -70,18 +125,23 @@ const MovieInformation = (props: {
                 );
               })}
             </HStack>
-            <HStack>
-              <Icon as={MdGrade} height={30} width={30} color={"yellow"} />
-              <Text fontSize={20} color={"white"}>
-                {props.movie.imdbRating}
-              </Text>
-            </HStack>
+            <Text
+              color={"white"}
+              fontSize={20}
+              fontWeight={"bold"}
+              alignSelf={"flex-start"}
+            >
+              Plot Summary
+            </Text>
+            <Text color={"white"} fontSize={20} alignSelf={"flex-start"}>
+              {props.movie.plot}
+            </Text>
           </VStack>
-        </HStack>
+        )}
       </Box>
       <VStack
-        paddingLeft={10}
-        paddingRight={10}
+        paddingLeft={isDesktop ? 10 : 0}
+        paddingRight={isDesktop ? 10 : 0}
         paddingBottom={10}
         fontSize={20}
         color={"white"}
